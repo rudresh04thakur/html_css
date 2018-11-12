@@ -1,0 +1,21 @@
+.GB{
+    color: red;
+}
+@media screen and (max-width:400px){
+    .GB{
+        background-color:yellow;
+        display: block;
+    }
+    .GH{
+        display: none;
+    }
+}
+@media screen and (min-width:401px){
+    .GB{
+        background-color:blue;
+        display: none;
+    }
+    .GH{
+        display: block;
+    }
+}

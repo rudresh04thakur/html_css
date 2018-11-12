@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <script src="jquery.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".validate").keypress(function(event){
+                    var code=event.keyCode||event.which;
+                    var c=$(this).attr('validation');
+                    var codeChar=(code<65 || code>91) && (code<97 || code>122) && code!=13 && code!=9;
+                    var codeNumber=(code<48 || code>57) && code!=9;
+                    var codeSpace=(code!=32);
+                    //var codeEmail=(t.value.indexOf('@')>3 && t.value.substring(t.value.indexOf('@')+1,t.value.indexOf('.')).length>3 && t.value.length>t.value.indexOf('.')+2) ;
+                    var codeArrow=(code!=37 && code !=38 && code!=39 && code!=40);
+                    if(code==8)
+                    {
+                       $("#"+$(this).parent().attr("id")).find(".msg").first().html("");
+                    }
+                    else{
+                        if(c==='char'){
+                             if(codeChar){
+                                $("#"+$(this).parent().attr("id")).find(".msg").first().html("Invalid").css("color","red");
+                            }
+                        }
+                        if(c==='number'){
+                            if(codeNumber){
+                                $("#"+$(this).parent().attr("id")).find(".msg").first().html("Invalid").css("color","red");
+                            }
+                        }
+                        if(c==='email'){
+                            if(codeEmail){
+                                $("#"+$(this).parent().attr("id")).find(".msg").first().html("");
+                            }
+                            else{
+                                $("#"+$(this).parent().attr("id")).find(".msg").first().html("Invalid").css("color","red");
+                            }
+                        }
+                        if(c==='alphanumber'){
+                            if(codeNumber && codeChar){
+                                $("#"+$(this).parent().attr("id")).find(".msg").first().html("Invalid").css("color","red");
+                            }
+                        }                    
+                    }
+                });
+                $(".validate").blur(function(){
+                    var c=$(this).attr("validation");
+                    if(c==='password')
+                    {
+                            if(this.value.match(/([a-zA-Z])/)){
+                               $("#"+$(this).parent().attr("id")).find(".msg").first().html("Weak").css("color","Orange");
+                            }
+                            if(this.value.match(/([a-zA-Z])/) && this.value.match(/([0-9])/)){
+                                $("#"+$(this).parent().attr("id")).find(".msg").first().html("Medium").css("color","Blue");
+                            }
+                            if(this.value.match(/([a-zA-Z])/) && this.value.match(/([0-9])/)&&this.value.match(/([!,@,#,$,%,^,&,*,(,),-,_,=,+])/)){
+                                $("#"+$(this).parent().attr("id")).find(".msg").first().html("Strong").css("color","Green");
+                            }   
+                    }
+            });
+
+
+            });
+
+
+            /*
+            var Flag=0;
+            var f=true;
+            function validate(t,e,c){
+                //var codeSpan = document.createElement('span');
+                //var elmt=t.appendChild(codeSpan);
+                var elmt=t.parentElement.getElementsByClassName("msg")[0];
+                var code = e.keyCode || e.which;
+                
+                
+                var codeChar=(code<65 || code>91) && (code<97 || code>122) && code!=13 && code!=9;
+                var codeNumber=(code<48 || code>57) && code!=9;
+                var codeSpace=(code!=32);
+                var codeEmail=(t.value.indexOf('@')>3 && t.value.substring(t.value.indexOf('@')+1,t.value.indexOf('.')).length>3 && t.value.length>t.value.indexOf('.')+2) ;
+                var codeArrow=(code!=37 && code !=38 && code!=39 && code!=40);
+                //var codePassword=(code<65 || code>91) && (code<97 || code>122) && (code>48 || code<57) && (code>33 || code<47 || code>58 || code<64);
+
+                //alert(code);
+                if(code==8)
+                    elmt.innerHTML="";
+                else {
+                    if(c==='char'){
+                                if(codeChar && codeSpace){
+                                    elmt.style.color="RED";
+                                    elmt.innerHTML="Only Charecters Allow";
+                                }
+                    }
+                    if(c==='number'){
+                                if(codeNumber){
+                                    elmt.style.color="RED";
+                                    elmt.innerHTML="Only Numbers Allow";
+                                }
+                    }
+                    if(c==='alphanumber'){
+                                if(codeChar && codeNumber && codeSpace && codeArrow){
+                                    elmt.style.color="RED";
+                                    elmt.innerHTML="Special Charecter not Allow";
+                                }
+                    }
+                    if(c==='email'){
+                        if(codeEmail){
+                            elmt.innerHTML="";
+                        }
+                        else{
+                            elmt.style.color="RED";
+                            elmt.innerHTML="Email Not Valid";
+                        }
+                    }
+                  if(c==='password'){
+                          
+                  }  
+                }
+            }*/
+        </script>
+    </head>
+    <body>
+        <form action="#" method="POST" name="contact" >
+            <div id="divuid">
+                <label for="uid">User Id </label>
+                <input type="text" id="uid" name="uid" class="validate" validation="char" required/>
+                <span class="msg"></span>
+                <div class="msg"></div>
+            </div>
+            <div id="divemail">
+                <label for="email"> Email </label>
+                <input type="email" id="email"  name="email" class="validate" validation="email" required/>
+                <span class="msg"></span>
+            </div>
+            <div id="divmnum">
+                <label for="mnum">Mobile Number </label>
+                <input type="text" id="mnum" class="validate" validation="number" name="mnum"/>
+                <span class="msg"></span>
+            </div>
+            <div id="divpwd">
+                <label for="pwd">Password </label>
+                <input type="text" id="pwd" class="validate" validation="password" name="pwd"/>
+                <span class="msg"></span>
+            </div>
+            <div id="divadr">
+                <label for="adr">Address </label>
+                <textarea cols="10" rows="4" id="adr" name="adr" class="validate" validation="alphanumber"></textarea>
+                <span class="msg"></span>
+            </div>
+
+           
+            <input type="submit" value="Send" name="submit"/>
+        </form>
+    </body>
+</html>
